@@ -1,0 +1,5 @@
+1) http://toto <- chemin d'accès
+2) git remote add nom_du_tag chemin_d_acces
+	--> export http_proxy = PROXYIUT (dans .bashrc)
+	--> export https_proxy = PROXYIUT (dans .bashrc)
+3) git push nom_du_tag master
