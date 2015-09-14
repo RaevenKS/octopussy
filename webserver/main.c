@@ -1,10 +1,13 @@
 #include <stdio.h>
 #include <string.h>
-int main(int argc, char **argv){
-	if (argc > 1 && strcmp(argv[1], "-advice") == 0){
-		printf("Don\'t\n");
-		return 42;
-	}
-	printf("Need an advice ?\n");
+#include "socket.h"
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <netinet/ip.h>
+
+int main(){
+
+	creer_serveur(8080);
 	return 0;
 }
