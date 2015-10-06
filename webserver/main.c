@@ -10,6 +10,8 @@
 #include <signal.h>
 #include <sys/wait.h>
 
+
+
 void traitement_signal(int sig){
   printf("Signal %d recu\n", sig);
   waitpid(-1, &sig, WNOHANG);
@@ -35,23 +37,28 @@ int main(){
   int socket_serveur = creer_serveur(8081);
   int socket_client;
   char buffer[80];
+  FILE * file;
+  
   initialiser_signaux();
   while(1){
     socket_client = accept(socket_serveur, NULL, NULL);
     if (socket_client == -1){
 	    perror("accept"); // Erreur sur l'acceptation
     }
-	  
+
+    
     int pid = fork();
     if(pid==0){
-      sleep(1);
-      write(socket_client, message_bienvenue, strlen(message_bienvenue));
+      file = fdopen(socket_client, "w+");
+      if(file == NULL)
+	perror("fdopen");
+      fprintf(file, "<Octopussy> %s", message_bienvenue);
+      fflush(file);
       while(1){
-	int i = read(socket_client, buffer, 80);
-	if(i != -1)
-	  write(socket_client, buffer, i);
-	else
-	  write(socket_client, buffer, 80);
+	fgets(buffer, 80, file);
+	fflush(file);
+	fprintf(file, "<Octopussy> %s", buffer);
+	fflush(file);
       }
     }
     else{
