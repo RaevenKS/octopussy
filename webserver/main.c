@@ -43,6 +43,7 @@ int main(){
   int ok = 1;
   int tokcpt = 0;
   int lignevide = 0;
+  int errnotfound = 1;
   
   initialiser_signaux();
   while(1){
@@ -65,6 +66,9 @@ int main(){
 	  if(tokcpt==1 && strcmp(token, "GET")!=0){
 	      ok = 0;
 	    }
+	  if(tokcpt==2 && strcmp(token, "/")!=0){
+	      errnotfound = 0;
+	    }
 	  if(tokcpt >3){
 	      ok = 0;
 	    }
@@ -82,6 +86,11 @@ int main(){
 	  if(str!=NULL && (strcmp(str, "\r\n")==0 || strcmp(str, "\n")==0))
 	    lignevide = 1;
 	}
+      if(errnotfound == 0){
+	fprintf(file, "<Octopussy>HTTP/1.1 404 Not Found\r\nConnection: close\r\nContent-length:17\r\n\n404 Not Found\n ");
+	fflush(file);
+	exit(0);
+      }
       if(ok==1){
 	fprintf(file, "<Octopussy> %s\n HTTP/1.1 200 OK\r\nConnection: open\r\nContent-length:%d\r\n\n200 OK\n", message_bienvenue, (int)strlen(message_bienvenue));
 	fflush(file);
