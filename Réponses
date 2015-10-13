@@ -1,0 +1,4 @@
+1) Il y a une erreur qui empêche de relancer immédiatement le serveur (erreur de Bind).
+2) La commande ne crée qu'une connexion et se déconnecte immédiatement.
+3) ::1 est l'adresse locale IPv6, et la socket ne prend que les v4.
+4) Le serveur ne gère pas plusieurs clients en simultané, mais les gère les uns derrière les autres.
