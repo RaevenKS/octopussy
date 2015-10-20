@@ -1,0 +1,10 @@
+#ifndef __SOCKET_H__
+#define __SOCKET_H__
+
+void traitement_signal(int sig);
+void initialiser_signaux();
+char *fgets_or_exit(char *buffer, int size, FILE *stream);
+int parse_http_request ( const char * request_line , http_request * request );
+void skip_header(FILE *client);
+
+#endif

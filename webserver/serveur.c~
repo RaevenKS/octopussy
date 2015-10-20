@@ -1,0 +1,89 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include "socket.h"
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <netinet/ip.h>
+#include <signal.h>
+#include <sys/wait.h>
+
+enum http_method {
+  HTTP_GET ,
+  HTTP_UNSUPPORTED ,
+};
+
+typedef struct
+{
+  enum http_method method ;
+  int major_version ;
+  int minor_version ;
+  char * url ;
+} http_request ;
+
+void traitement_signal(int sig)
+{
+  printf("Signal %d recu\n", sig);
+  waitpid(-1, &sig, WNOHANG);
+}
+
+
+void initialiser_signaux()
+{
+  struct sigaction sa;
+  sa.sa_handler = traitement_signal;
+  sigemptyset(&sa.sa_mask);
+  sa.sa_flags = SA_RESTART;
+  if(sigaction(SIGCHLD, &sa, NULL) == -1)
+    perror("sigaction(SIGCHLD)");
+  if (signal(SIGPIPE, SIG_IGN) == SIG_ERR)
+    perror("signal");
+}
+
+char *fgets_or_exit(char *buffer, int size, FILE *stream)
+{
+  char *str = fgets(buffer, size, stream);
+  if(str==NULL)
+    {
+      fprintf(stdout, "Connexion interrompue");
+      exit(1);
+    }
+  return str;
+}
+
+int parse_http_request ( const char * request_line , http_request * request ){
+  token = strtok(str, " ");
+  while(token)
+    {
+      tokcpt++;
+      if(tokcpt==1 && strcmp(token, "GET")!=0)
+	{
+	  ok = 0;
+	}
+      if(tokcpt==2 && strcmp(token, "/")!=0)
+	{
+	  errnotfound = 0;
+	}
+      if(tokcpt >3)
+	{
+	  ok = 0;
+	}
+      if(tokcpt==3 && strcmp(token, "HTTP/1.0\r\n")!=0 && (strcmp(token, "HTTP/1.1\r\n")!=0))
+	{
+	  ok = 0;
+	}
+      token=strtok(NULL, " "); 
+    }
+  if(tokcpt < 3)
+    {
+      ok = 0;
+    }
+  while(lignevide==0)
+    {
+      str = fgets_or_exit(buffer, 80, file);
+      if(str!=NULL && (strcmp(str, "\r\n")==0 || strcmp(str, "\n")==0))
+	lignevide = 1;
+    }
+}
