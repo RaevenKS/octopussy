@@ -1,1 +1,26 @@
-Nothing yet
+Dans ce fichier, vous trouverez un exemple d'utilisation du programme ainsi que les tag pour github.
+
+1) Clonage et Installation :
+
+- Veillez tout d'abord à créer un fichier dans lequel ira se cloner le dépôt git avec la commande "mkdir nom_de_fichier".
+- Déplacez vous dans votre fichier avec "mkdir nom_du_fichier".
+- Clonez le dépôt git avec la commande "git clone https://github.com/RaevenKS/octopussy.git".
+- Déplacez vous dans le sous-fichier webserver avec la commande cd ("cd webserver"), puis "make".
+
+2) Lancement du serveur :
+
+- Maintenant que le serveur est bien compilé, lancez le à l'aide de la commande "./octopussy".
+- Le serveur est maintenant lancé sur un port local de la machine que vous utilisez (8080 par défaut).
+
+3) Connexion d'un client au serveur :
+
+- Les commandes "printf "GET / HTTP/1.0\r\n\r\n" | nc 127.0.0.1 8080" et "printf "GET / HTTP/1.1\r\n\r\n" | nc 127.0.0.1 8080" permettent de se connecter au serveur avec la version souhaitée du protocole.
+
+4) Les tags :
+
+	1- REUSEADDR
+	2- SIGCHLD
+	3- fdopen
+	4- Simple-GET
+	5- url_or_404
+	6- url_or_404_clean
